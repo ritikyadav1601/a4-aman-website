@@ -10,8 +10,10 @@ export default function Clock() {
       const date = new Date();
       let hours = date.getHours();
       hours = hours > 12 ? hours - 12 : hours === 0 ? 12 : hours;
+      const days = ["Sun", "Mon", "Tue", "Wed", "Thu", "Fri", "Sat"];
+      const months = ["Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"];
       setValue(
-        `${date.toDateString()} ${String(hours).padStart(2, "0")}:${String(date.getMinutes()).padStart(2, "0")}:${String(date.getSeconds()).padStart(2, "0")}`
+        `${days[date.getDay()]} ${String(date.getDate()).padStart(2, "0")} ${months[date.getMonth()]} ${date.getFullYear()} ${String(hours).padStart(2, "0")}:${String(date.getMinutes()).padStart(2, "0")}:${String(date.getSeconds()).padStart(2, "0")}`
       );
     }
     update();

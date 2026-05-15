@@ -5,7 +5,7 @@ import GameCards from "@/components/GameCards";
 import MonthlyChartTable from "@/components/MonthlyChartTable";
 import PublicLayout from "@/components/PublicLayout";
 import { getAds, getGamesWithTodayResults, getMonthlyRows, getTopGames } from "@/lib/data";
-import { monthName, slugify } from "@/lib/utils";
+import { istDate, monthName, slugify } from "@/lib/utils";
 
 export const dynamic = "force-dynamic";
 
@@ -20,7 +20,8 @@ export default async function HomePage() {
     getMonthlyRows({ untilToday: true })
   ]);
   const topGames = await getTopGames(games);
-  const title = `Satta King Record Chart ${monthName(new Date().toISOString().slice(0, 10))}`;
+  const today = istDate();
+  const title = `Satta King Record Chart ${monthName(today)}`;
   const year = new Date().getFullYear();
 
   return (
@@ -44,7 +45,7 @@ export default async function HomePage() {
       <AdBlock ad={ads[1] || ads[0]} />
       <hr style={{ height: 10, marginTop: 0, marginBottom: 10, backgroundColor: "#00FF00" }} />
       <hr style={{ height: 10, backgroundColor: "rgb(2 85 70)" }} />
-      <MonthlyChartTable title={title} rows={monthly.rows} columns={monthly.gameColumns} />
+      <MonthlyChartTable title={title} rows={monthly.rows} columns={monthly.gameColumns} dateKey={today} />
       <div className="mx-auto py-8">
         <div className="px-5 grid grid-cols-1">
           {games.map((game) => (

@@ -264,6 +264,33 @@ select {
   width: 14%;
 }
 
+.monthly-chart-nav {
+  display: flex;
+  gap: 10px;
+  justify-content: space-between;
+  margin: -16px 8px 24px;
+}
+
+.monthly-chart-nav-btn {
+  background: #2563eb;
+  border-radius: 6px;
+  color: #ffffff;
+  display: inline-flex;
+  flex: 1;
+  font-size: 13px;
+  font-weight: 700;
+  justify-content: center;
+  line-height: 1.2;
+  padding: 10px 8px;
+  text-align: center;
+  text-decoration: none;
+}
+
+.monthly-chart-nav-btn:hover {
+  background: #1d4ed8;
+  color: #ffffff;
+}
+
 @media (min-width: 768px) {
   .monthly-chart-mobile {
     display: none;
@@ -275,5 +302,16 @@ select {
 
   .satta-results-table {
     table-layout: auto;
+  }
+
+  .monthly-chart-nav {
+    margin-left: auto;
+    margin-right: auto;
+    max-width: 720px;
+  }
+
+  .monthly-chart-nav-btn {
+    font-size: 15px;
+    padding: 12px 16px;
   }
 }
