@@ -42,7 +42,7 @@ export default async function HomePage() {
       <div className="home-blue-band home-blue-band-bottom"></div>
       <AdBlock ad={ads[0]} />
       <GameCards games={games} />
-      <AdBlock ad={ads[1] || ads[0]} />
+      {/* <AdBlock ad={ads[1] || ads[0]} /> */}
       <hr style={{ height: 10, marginTop: 0, marginBottom: 10, backgroundColor: "#00FF00" }} />
       <hr style={{ height: 10, backgroundColor: "rgb(2 85 70)" }} />
       <MonthlyChartTable title={title} rows={monthly.rows} columns={monthly.gameColumns} dateKey={today} />
