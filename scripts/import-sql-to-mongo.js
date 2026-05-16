@@ -84,9 +84,20 @@ function rowsFor(sql, table) {
   );
 }
 
+async function bulkWriteInBatches(Model, operations, label, size = 1000) {
+  for (let index = 0; index < operations.length; index += size) {
+    const batch = operations.slice(index, index + size);
+    if (batch.length) await Model.bulkWrite(batch, { ordered: false });
+    console.log(`Imported ${Math.min(index + batch.length, operations.length)}/${operations.length} ${label}.`);
+  }
+}
+
 async function main() {
   loadEnv();
-  const sqlPath = process.argv[2] || path.resolve(process.cwd(), "../murgan_kalkasatta.sql");
+  const args = process.argv.slice(2);
+  const reset = args.includes("--reset");
+  const sqlPathArg = args.find((arg) => arg !== "--reset");
+  const sqlPath = sqlPathArg || path.resolve(process.cwd(), "../murgan_kalkasatta.sql");
   if (!process.env.MONGODB_URI) throw new Error("Set MONGODB_URI in .env first.");
   const sql = fs.readFileSync(sqlPath, "utf8");
 
@@ -127,60 +138,99 @@ async function main() {
     password: String
   }, { timestamps: true }));
 
+  if (reset) {
+    await Promise.all([
+      Game.deleteMany({}),
+      GameResult.deleteMany({}),
+      Ad.deleteMany({}),
+      Contact.deleteMany({}),
+      User.deleteMany({})
+    ]);
+    console.log("Cleared existing MongoDB app data.");
+  }
+
   const games = rowsFor(sql, "tbl_game");
-  const gameMap = new Map();
-  for (const row of games) {
-    const doc = await Game.findOneAndUpdate(
-      { sqlId: row.id },
-      {
-        sqlId: row.id,
-        name: row.name,
-        code: row.code,
-        resultTime: row.result_time,
-        isActive: row.isactive === 1,
-        showIndex: row.showindex || 0,
-        mid: row.mid || 0
-      },
-      { upsert: true, new: true }
-    );
-    gameMap.set(row.id, doc._id);
-  }
+  await bulkWriteInBatches(
+    Game,
+    games.map((row) => ({
+      updateOne: {
+        filter: { sqlId: row.id },
+        update: {
+          $set: {
+            sqlId: row.id,
+            name: row.name,
+            code: row.code,
+            resultTime: row.result_time,
+            isActive: row.isactive === 1,
+            showIndex: row.showindex || 0,
+            mid: row.mid || 0
+          }
+        },
+        upsert: true
+      }
+    })),
+    "games"
+  );
 
-  for (const row of rowsFor(sql, "tbl_game_result")) {
-    const game = gameMap.get(row.gameid);
-    if (!game) continue;
-    await GameResult.findOneAndUpdate(
-      { game, resultDate: row.result_date },
-      { sqlId: row.id, game, gameSqlId: row.gameid, resultDate: row.result_date, result: row.result || "" },
-      { upsert: true, new: true }
-    );
-  }
+  const gameDocs = await Game.find({ sqlId: { $in: games.map((row) => row.id) } }).select({ _id: 1, sqlId: 1 }).lean();
+  const gameMap = new Map(gameDocs.map((game) => [game.sqlId, game._id]));
+  const resultRows = rowsFor(sql, "tbl_game_result");
+  await bulkWriteInBatches(
+    GameResult,
+    resultRows.flatMap((row) => {
+      const game = gameMap.get(row.gameid);
+      if (!game) return [];
+      return [{
+        updateOne: {
+          filter: { game, resultDate: row.result_date },
+          update: { $set: { sqlId: row.id, game, gameSqlId: row.gameid, resultDate: row.result_date, result: row.result || "" } },
+          upsert: true
+        }
+      }];
+    }),
+    "results"
+  );
 
-  for (const row of rowsFor(sql, "tbl_ad")) {
-    await Ad.findOneAndUpdate(
-      { sqlId: row.id },
-      { sqlId: row.id, gpayNumber: row.gpaynumber || "", whatsappNumber: row.whatsappnumber || "", khaiwalName: row.khaiwalname || "", website: row.website || "" },
-      { upsert: true }
-    );
-  }
+  const adRows = rowsFor(sql, "tbl_ad");
+  await bulkWriteInBatches(
+    Ad,
+    adRows.map((row) => ({
+      updateOne: {
+        filter: { sqlId: row.id },
+        update: { $set: { sqlId: row.id, gpayNumber: row.gpaynumber || "", whatsappNumber: row.whatsappnumber || "", khaiwalName: row.khaiwalname || "", website: row.website || "" } },
+        upsert: true
+      }
+    })),
+    "ads"
+  );
 
-  for (const row of rowsFor(sql, "tbl_contact")) {
-    await Contact.findOneAndUpdate(
-      { sqlId: row.id },
-      { sqlId: row.id, name: row.name || "", contactNumber: row.contactnumber || "" },
-      { upsert: true }
-    );
-  }
+  const contactRows = rowsFor(sql, "tbl_contact");
+  await bulkWriteInBatches(
+    Contact,
+    contactRows.map((row) => ({
+      updateOne: {
+        filter: { sqlId: row.id },
+        update: { $set: { sqlId: row.id, name: row.name || "", contactNumber: row.contactnumber || "" } },
+        upsert: true
+      }
+    })),
+    "contacts"
+  );
 
-  for (const row of rowsFor(sql, "users")) {
-    await User.findOneAndUpdate(
-      { email: row.email },
-      { sqlId: row.id, name: row.name || "Admin", email: row.email, password: String(row.password || "").replace(/^\$2y\$/, "$2b$") },
-      { upsert: true }
-    );
-  }
+  const userRows = rowsFor(sql, "users");
+  await bulkWriteInBatches(
+    User,
+    userRows.map((row) => ({
+      updateOne: {
+        filter: { email: row.email },
+        update: { $set: { sqlId: row.id, name: row.name || "Admin", email: row.email, password: String(row.password || "").replace(/^\$2y\$/, "$2b$") } },
+        upsert: true
+      }
+    })),
+    "users"
+  );
 
-  console.log(`Imported ${games.length} games and ${rowsFor(sql, "tbl_game_result").length} results.`);
+  console.log(`Imported ${games.length} games and ${resultRows.length} results.`);
   await mongoose.disconnect();
 }
 
