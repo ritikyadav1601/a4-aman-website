@@ -72,8 +72,16 @@ Run the smart 2-hour result-window sync. This is the command to schedule every 5
 npm run sync:a7:smart
 ```
 
-On Vercel, the same smart sync runs from `/api/cron/sync-a7` every 5 minutes through `vercel.json`.
-Set `CRON_SECRET` in Vercel project environment variables to protect the cron endpoint.
+On Vercel or cron-job.org, the same smart sync runs from `/api/cron/sync-a7`.
+Set `CRON_SECRET` in your environment variables to protect the cron endpoint.
+
+For cron-job.org, use this URL format so the request is authorized:
+
+```text
+https://your-domain.com/api/cron/sync-a7?secret=YOUR_CRON_SECRET
+```
+
+The cron endpoint has a 30 second max duration, fetches A7 with a 12 second timeout, and revalidates the homepage after a successful sync.
 
 Use a different active window if needed:
 
