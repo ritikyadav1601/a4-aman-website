@@ -6,6 +6,9 @@ export const metadata = {
   metadataBase: new URL(siteUrl),
   title: "Satta King Fast - Live Results & Daily Number Charts",
   description: "Check live results, daily updates, fast number charts, and market records with quick access, simple layout, and regular updates for users.SattaKingFast.Com",
+  verification: {
+    google: "RyOErpCLdPJqTB3jfG_mF8k_bQD-oRD4CzhvGUknWBY",
+  },
   alternates: {
     canonical: "/"
   },
