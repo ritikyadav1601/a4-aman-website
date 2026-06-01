@@ -34,6 +34,7 @@ export default function RootLayout({ children }) {
     <html lang="en">
       <head>
         <title>Satta King Fast - Live Results & Daily Number Charts</title>
+        <meta name="google-site-verification" content="RyOErpCLdPJqTB3jfG_mF8k_bQD-oRD4CzhvGUknWBY" />
         <link rel="stylesheet" href="/asset/app.css" />
         <link rel="icon" href="/favicon.ico" sizes="any" />
         <link rel="icon" href="/icon.png" type="image/png" />
