@@ -21,5 +21,5 @@ export default function Clock() {
     return () => clearInterval(timer);
   }, []);
 
-  return <h2 className="text-xl sm:text-2xl font-semibold text-pink-600 mb-4 uppercase text-center">{value}</h2>;
+  return <h2 className="clock-display text-xl sm:text-2xl font-semibold mb-4 uppercase text-center">{value}</h2>;
 }

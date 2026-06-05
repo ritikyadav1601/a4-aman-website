@@ -3,40 +3,44 @@ import { formatTime, slugify } from "@/lib/utils";
 
 function ResultText({ value }) {
   const pending = String(value).toUpperCase() === "XX";
-  return <span className={pending ? "result-pending" : undefined}>{value}</span>;
+  return <span className={pending ? "result-pending a7-wait" : undefined}>{pending ? "wait" : value}</span>;
 }
 
-function GameCard({ game }) {
+function GameRow({ game }) {
   const year = new Date().getFullYear();
   return (
-    <div className="responsive-copy border border-gray-300 text-center shadow-sm rounded-md py-2">
-      <h2 className="text-lg text-blue-700 font-bold uppercase leading-tight px-1">{game.name}</h2>
-      <p className="text-red-600 font-semibold">({formatTime(game.resultTime)})</p>
-      <p className="text-lg md:text-xl font-bold">
-        {"{ "}
-        <ResultText value={game.first} />
-        {" } "}
-        <span className="text-green-600">➡</span> [ <ResultText value={game.second} /> ]
-      </p>
-      <div className="mt-3">
-        <Link className="bg-blue-600 text-white inline-block text-sm px-4 py-1 w-full transition" href={`/year-chart/${slugify(game.name)}-result-chart-${year}`}>
+    <tr>
+      <td>
+        <Link className="a7-game-link" href={`/year-chart/${slugify(game.name)}-result-chart-${year}`}>
           {game.name}
         </Link>
-      </div>
-    </div>
+        <span className="a7-game-time">{formatTime(game.resultTime)}</span>
+      </td>
+      <td><ResultText value={game.first} /></td>
+      <td><ResultText value={game.second} /></td>
+    </tr>
   );
 }
 
 export default function GameCards({ games }) {
   if (!games.length) {
-    return <div className="p-4 text-center font-bold text-red-600">No active games found. Import SQL data from admin database backup.</div>;
+    return <div className="empty-state p-4 text-center font-bold">No active games found. Import SQL data from admin database backup.</div>;
   }
 
   return (
-    <div className="bg-white py-8">
-      <div className="grid grid-cols-2 gap-1">
-        {games.map((game) => <GameCard key={game._id} game={game} />)}
-      </div>
-    </div>
+    <section className="a7-result-table-section">
+      <table className="a7-result-table">
+        <thead>
+          <tr>
+            <th>सट्टा का नाम</th>
+            <th>कल आया था</th>
+            <th>आज का रिज़ल्ट</th>
+          </tr>
+        </thead>
+        <tbody>
+          {games.map((game) => <GameRow key={game._id} game={game} />)}
+        </tbody>
+      </table>
+    </section>
   );
 }

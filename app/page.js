@@ -6,7 +6,7 @@ import MonthlyChartTable from "@/components/MonthlyChartTable";
 import PublicLayout from "@/components/PublicLayout";
 import YearlyChartSeoContent from "@/components/YearlyChartSeoContent";
 import { getAds, getGamesWithTodayResults, getMonthlyRows, getTopGames } from "@/lib/data";
-import { istDate, monthName, slugify } from "@/lib/utils";
+import { formatTime, istDate, monthName, slugify } from "@/lib/utils";
 
 export const revalidate = 30;
 
@@ -61,9 +61,9 @@ function LiveResultSection({ games, showClock = false }) {
   if (!games.length) return null;
 
   return (
-    <div className="live-result-section bg-white">
+    <section className={showClock ? "a7-hero-results" : "a7-compact-results"}>
       {showClock ? <Clock /> : null}
-      <h1 className="live-result-title">Satta King Live Result Today</h1>
+      {showClock ? <p className="hintext">हा भाई यही आती हे सबसे पहले खबर रूको और देखो</p> : null}
       <div className="live-result-list">
         {games.map((item) => (
           <div className="live-result-item text-center" key={item._id}>
@@ -72,7 +72,23 @@ function LiveResultSection({ games, showClock = false }) {
           </div>
         ))}
       </div>
-    </div>
+    </section>
+  );
+}
+
+function FeaturedMarketStrip({ game }) {
+  if (!game) return null;
+
+  return (
+    <section className="a7-feature-strip">
+      <h2>{game.name}</h2>
+      <p>{formatTime(game.resultTime)}</p>
+      <strong>
+        <span className={resultClass(game.first)}>{game.first}</span>
+        <span className="a7-arrow">➜</span>
+        <span className={resultClass(game.second)}>{game.second}</span>
+      </strong>
+    </section>
   );
 }
 
@@ -115,35 +131,30 @@ export default async function HomePage() {
     return String(a.resultTime).localeCompare(String(b.resultTime)) || normalizeGameName(a.name).localeCompare(normalizeGameName(b.name));
   });
   const today = istDate();
-  const title = `Satta King Record Chart ${monthName(today)}`;
   const year = new Date().getFullYear();
+  const title = `Satta Result Chart ${monthName(today)} ${year}`;
+  const featuredMarket = featuredGames.find((game) => normalizeGameName(game.name) === "desawer") || featuredGames[0];
+  const heroGames = featuredGames.slice(0, 5);
 
   return (
     <PublicLayout>
-      <div className="home-blue-band home-blue-band-top"></div>
-      <LiveResultSection games={featuredTopGames} showClock />
-      <div className="home-blue-band home-blue-band-bottom"></div>
+      <LiveResultSection games={heroGames.length ? heroGames : featuredTopGames} showClock />
+      <FeaturedMarketStrip game={featuredMarket} />
       <AdBlock ad={ads[0]} />
       <GameCards games={featuredGames} />
       <LiveResultSection games={remainingTopGames} />
       <GameCards games={remainingGames} />
-      {/* <AdBlock ad={ads[1] || ads[0]} /> */}
-      <hr style={{ height: 10, marginTop: 0, marginBottom: 10, backgroundColor: "#00FF00" }} />
-      <hr style={{ height: 10, backgroundColor: "rgb(2 85 70)" }} />
       <MonthlyChartTable title={title} rows={monthly.rows} columns={monthly.gameColumns} dateKey={today} />
-      <div className="mx-auto py-8">
-        <div className="fluid-panel grid grid-cols-1">
+      <section className="a7-year-links">
+        <h2>SATTA RECORD CHART {year}</h2>
+        <div className="a7-year-link-list">
           {yearlyGames.map((game) => (
-            <Link className="hover:underline border-2 shadow-xl rounded-lg my-1" href={`/year-chart/${slugify(game.name)}-result-chart-${year}`} key={game._id}>
-              <div className="overflow-hidden transition-all duration-300 transform cursor-pointer">
-                <div className="py-4 text-center">
-                  <h3 className="text-xl font-bold uppercase">{game.name} YEARLY CHART {year}</h3>
-                </div>
-              </div>
+            <Link href={`/year-chart/${slugify(game.name)}-result-chart-${year}`} key={game._id}>
+              {game.name} {year}
             </Link>
           ))}
         </div>
-      </div>
+      </section>
       <YearlyChartSeoContent />
     </PublicLayout>
   );

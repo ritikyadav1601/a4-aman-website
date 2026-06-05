@@ -1,0 +1,45 @@
+:root {
+  --site-bg: #ffffff;
+  --site-surface: #ffffff;
+  --site-surface-soft: #fff7d1;
+  --site-surface-alt: #fff2bf;
+  --site-text: #000000;
+  --site-muted: #343434;
+  --site-border: #333333;
+  --on-dark: #ffffff;
+
+  --brand-primary: #ffd800;
+  --brand-primary-dark: #000000;
+  --brand-primary-soft: #fff5a8;
+  --brand-secondary: #ff0000;
+  --brand-secondary-dark: #b00000;
+  --brand-accent: #ffd800;
+  --brand-accent-soft: #fff4a6;
+  --brand-info: #023378;
+  --brand-success: #138a42;
+
+  --nav-bg: #000000;
+  --nav-pill-bg: #ffd800;
+  --nav-pill-active-bg: #ffffff;
+  --nav-text: #000000;
+  --nav-border: #000000;
+
+  --live-title: #ffffff;
+  --live-game: #ffffff;
+  --live-number: #ffffff;
+  --live-card-bg: #000000;
+  --live-card-border: #000000;
+
+  --chart-heading-bg: var(--brand-accent);
+  --chart-heading-text: #1f2118;
+  --chart-header-bg: #000000;
+  --chart-header-text: #ffffff;
+  --chart-date-bg: #ffd800;
+  --chart-row-alt: #fff8cc;
+
+  --footer-bg: #000000;
+  --footer-text: #ffffff;
+  --whatsapp-bg: #25d366;
+  --ad-bg: #ffd800;
+  --ad-border: #ff0000;
+}
