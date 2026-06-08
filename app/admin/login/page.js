@@ -11,10 +11,10 @@ export default async function LoginPage({ searchParams }) {
   const error = resolvedSearchParams?.error;
 
   return (
-    <main style={{ minHeight: "100vh", display: "flex", alignItems: "center", justifyContent: "center", background: "#f6f6f6", padding: 20 }}>
-      <div style={{ width: "90%", maxWidth: 450, background: "white", padding: 30, borderRadius: 10, boxShadow: "0 30px 60px rgba(0,0,0,.3)", textAlign: "center" }}>
+    <main style={{ minHeight: "100vh", display: "flex", alignItems: "center", justifyContent: "center", background: "var(--site-bg)", padding: 20 }}>
+      <div style={{ width: "90%", maxWidth: 450, background: "var(--brand-accent)", padding: 30, borderRadius: 10, boxShadow: "0 30px 60px rgba(17, 24, 39, .22)", textAlign: "center" }}>
         <style>{loginLoaderCss}</style>
-        <h2 style={{ color: "#0d0d0d", borderBottom: "2px solid #5fbae9", display: "inline-block", marginBottom: 25 }}>{hasUsers ? "Admin Login" : "Create Admin"}</h2>
+        <h2 style={{ color: "var(--site-text)", borderBottom: "2px solid var(--brand-secondary)", display: "inline-block", marginBottom: 25 }}>{hasUsers ? "Admin Login" : "Create Admin"}</h2>
         {error && <p className="text-red-600 font-bold mb-3">Login failed</p>}
         {hasUsers ? (
           <form action="/api/auth/login" method="POST">
@@ -44,10 +44,10 @@ export default async function LoginPage({ searchParams }) {
 }
 
 const inputStyle = {
-  backgroundColor: "#f6f6f6",
-  border: "2px solid #f6f6f6",
+  backgroundColor: "#ffffff",
+  border: "2px solid var(--brand-secondary)",
   borderRadius: 5,
-  color: "#0d0d0d",
+  color: "var(--site-text)",
   display: "block",
   fontSize: 16,
   margin: "8px auto",
@@ -57,10 +57,10 @@ const inputStyle = {
 };
 
 const buttonStyle = {
-  backgroundColor: "#56baed",
+  backgroundColor: "var(--brand-primary)",
   border: "none",
   borderRadius: 5,
-  color: "white",
+  color: "var(--on-dark)",
   cursor: "pointer",
   fontSize: 13,
   margin: "20px",
@@ -71,7 +71,7 @@ const buttonStyle = {
 const loginLoaderCss = `
 .login-loader {
   align-items: center;
-  background: rgba(17, 16, 29, 0.34);
+  background: rgba(17, 24, 39, 0.34);
   display: flex;
   inset: 0;
   justify-content: center;
@@ -87,10 +87,10 @@ const loginLoaderCss = `
 }
 .login-loader-box {
   align-items: center;
-  background: #fff;
+  background: #f9fafb;
   border-radius: 8px;
   box-shadow: 0 18px 50px rgba(0, 0, 0, 0.25);
-  color: #11101d;
+  color: #111827;
   display: flex;
   font-weight: 600;
   gap: 12px;
@@ -99,8 +99,8 @@ const loginLoaderCss = `
 }
 .login-spinner {
   animation: login-spin 0.7s linear infinite;
-  border: 3px solid #d8d8e6;
-  border-top-color: #11101d;
+  border: 3px solid #d4af37;
+  border-top-color: #111827;
   border-radius: 50%;
   display: inline-block;
   height: 24px;

@@ -37,7 +37,7 @@ canvas {
 
 .site-top {
   background: linear-gradient(180deg, var(--brand-primary-dark) 0%, var(--brand-primary) 100%);
-  border-bottom: 4px solid var(--brand-accent);
+  border-bottom: 4px solid var(--brand-secondary);
 }
 
 .site-logo-wrap {
@@ -85,8 +85,8 @@ canvas {
 
 .site-kicker {
   background: var(--brand-accent-soft);
-  border-bottom: 2px solid var(--brand-accent);
-  border-top: 2px solid var(--brand-accent);
+  border-bottom: 2px solid var(--brand-secondary);
+  border-top: 2px solid var(--brand-secondary);
   color: var(--brand-primary-dark);
 }
 
@@ -110,15 +110,15 @@ select {
 }
 
 .yellow_bg {
-  background: var(--brand-accent);
+  background: var(--brand-secondary);
 }
 
 .yellow_heading {
-  color: var(--brand-accent);
+  color: var(--brand-secondary);
 }
 
 .bg_gradient {
-  background: linear-gradient(180deg, var(--brand-primary) 0%, var(--footer-bg) 100%);
+  background: linear-gradient(180deg, var(--brand-secondary) 0%, var(--footer-bg) 100%);
 }
 
 .floating {
@@ -185,7 +185,7 @@ select {
 }
 
 .home-blue-band {
-  background: linear-gradient(90deg, var(--brand-secondary) 0%, var(--brand-accent) 45%, var(--brand-primary) 100%);
+  background: linear-gradient(90deg, var(--brand-primary) 0%, var(--brand-secondary) 50%, var(--brand-accent) 100%);
   height: 20px;
 }
 
@@ -405,7 +405,7 @@ select {
 }
 
 .clock-display {
-  color: var(--brand-primary);
+  color: var(--brand-secondary);
   display: block;
   font-size: 20px;
   font-weight: 900;
@@ -430,7 +430,7 @@ select {
 }
 
 .section-divider-accent {
-  background: var(--brand-accent);
+  background: var(--brand-secondary);
 }
 
 .section-divider-primary {
@@ -517,7 +517,7 @@ select {
 
 .ad-button {
   background: var(--brand-secondary);
-  color: var(--on-dark);
+  color: var(--site-text);
 }
 
 .ad-button:hover {
@@ -592,7 +592,7 @@ select {
 
 .footer-link {
   background: var(--brand-secondary);
-  color: #ffffff;
+  color: var(--site-text);
 }
 
 .footer-link:hover {
@@ -685,7 +685,7 @@ select {
 }
 
 .a7-logo {
-  color: var(--site-text);
+  color: var(--brand-secondary);
   display: inline-block;
   font-size: 32px;
   font-weight: 900;
@@ -695,7 +695,7 @@ select {
 }
 
 .a7-logo:hover {
-  color: var(--site-text);
+  color: var(--brand-secondary);
   text-decoration: none;
 }
 
@@ -763,7 +763,7 @@ select {
 
 .a7-hero-results .live-result-value,
 .a7-compact-results .live-result-value {
-  color: var(--on-dark);
+  color: var(--live-number);
   font-size: 39px;
   font-weight: 800;
   letter-spacing: 4px;
@@ -781,7 +781,7 @@ select {
 
 .a7-feature-strip {
   background: var(--brand-primary);
-  color: var(--site-text);
+  color: var(--on-dark);
   padding: 20px 10px 17px;
   text-align: center;
 }
@@ -808,9 +808,9 @@ select {
 }
 
 .a7-arrow {
-  background: var(--site-text);
+  background: var(--brand-secondary);
   border-radius: 999px;
-  color: var(--brand-primary);
+  color: var(--site-text);
   display: inline-grid;
   font-size: 18px;
   height: 30px;
@@ -900,7 +900,7 @@ select {
 .a7-result-table th {
   background: var(--brand-primary);
   border: 1px solid var(--site-border);
-  color: var(--site-text);
+  color: var(--on-dark);
   font-size: 16px;
   font-weight: 900;
   padding: 8px 4px;
@@ -923,7 +923,7 @@ select {
 }
 
 .a7-game-link {
-  color: var(--brand-info);
+  color: var(--site-text);
   display: block;
   font-weight: 900;
   text-decoration: none;
@@ -956,7 +956,7 @@ select {
 }
 
 .a7-year-links h2 {
-  color: var(--brand-primary);
+  color: var(--brand-secondary);
   font-size: 18px;
   font-weight: 900;
   margin: 0 0 14px;
@@ -970,7 +970,7 @@ select {
 }
 
 .a7-year-link-list a {
-  color: var(--brand-primary);
+  color: var(--brand-secondary);
   font-weight: 800;
   text-decoration: underline;
   text-transform: uppercase;
@@ -992,7 +992,7 @@ select {
 }
 
 .a7-footer a {
-  color: var(--brand-primary);
+  color: var(--brand-secondary);
   font-weight: 800;
   text-decoration: underline;
 }

@@ -1,45 +1,45 @@
 :root {
   --site-bg: #ffffff;
   --site-surface: #ffffff;
-  --site-surface-soft: #fff7d1;
-  --site-surface-alt: #fff2bf;
-  --site-text: #000000;
-  --site-muted: #343434;
-  --site-border: #333333;
+  --site-surface-soft: #f9fafb;
+  --site-surface-alt: #f3f4f6;
+  --site-text: #111827;
+  --site-muted: #4b5563;
+  --site-border: #d4af37;
   --on-dark: #ffffff;
 
-  --brand-primary: #ffd800;
-  --brand-primary-dark: #000000;
-  --brand-primary-soft: #fff5a8;
-  --brand-secondary: #ff0000;
-  --brand-secondary-dark: #b00000;
-  --brand-accent: #ffd800;
-  --brand-accent-soft: #fff4a6;
-  --brand-info: #023378;
-  --brand-success: #138a42;
+  --brand-primary: #111827;
+  --brand-primary-dark: #0b1220;
+  --brand-primary-soft: #374151;
+  --brand-secondary: #d4af37;
+  --brand-secondary-dark: #a7831f;
+  --brand-accent: #f9fafb;
+  --brand-accent-soft: #f3f4f6;
+  --brand-info: #111827;
+  --brand-success: #15803d;
 
-  --nav-bg: #000000;
-  --nav-pill-bg: #ffd800;
-  --nav-pill-active-bg: #ffffff;
-  --nav-text: #000000;
-  --nav-border: #000000;
+  --nav-bg: #111827;
+  --nav-pill-bg: #d4af37;
+  --nav-pill-active-bg: #f9fafb;
+  --nav-text: #111827;
+  --nav-border: #d4af37;
 
   --live-title: #ffffff;
   --live-game: #ffffff;
-  --live-number: #ffffff;
-  --live-card-bg: #000000;
-  --live-card-border: #000000;
+  --live-number: #d4af37;
+  --live-card-bg: #111827;
+  --live-card-border: #d4af37;
 
-  --chart-heading-bg: var(--brand-accent);
-  --chart-heading-text: #1f2118;
-  --chart-header-bg: #000000;
+  --chart-heading-bg: var(--brand-secondary);
+  --chart-heading-text: #111827;
+  --chart-header-bg: #111827;
   --chart-header-text: #ffffff;
-  --chart-date-bg: #ffd800;
-  --chart-row-alt: #fff8cc;
+  --chart-date-bg: #f9fafb;
+  --chart-row-alt: #f9fafb;
 
-  --footer-bg: #000000;
+  --footer-bg: #111827;
   --footer-text: #ffffff;
   --whatsapp-bg: #25d366;
-  --ad-bg: #ffd800;
-  --ad-border: #ff0000;
+  --ad-bg: #f9fafb;
+  --ad-border: #d4af37;
 }

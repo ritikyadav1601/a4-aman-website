@@ -31,7 +31,7 @@ body {
   left: 0;
   height: 100%;
   width: 78px;
-  background: #11101d;
+  background: #111827;
   padding: 6px 14px;
   transition: all 0.5 ease;
   z-index: 1000;
@@ -42,7 +42,7 @@ body {
 }
 
 .sidebar .logo_content .logo {
-  color: #fff;
+  color: #f9fafb;
   height: 50px;
   width: 100%;
   display: flex;
@@ -71,7 +71,7 @@ body {
 
 .sidebar #btn {
   position: absolute;
-  color: #fff;
+  color: #f9fafb;
   left: 50%;
   top: 6px;
   font-size: 20px;
@@ -107,7 +107,7 @@ body {
   border-radius: 6px;
   height: 35px;
   width: 122px;
-  background: #fff;
+  background: #f9fafb;
   line-height: 35px;
   text-align: center;
   box-shadow: 0 5px 10px rgba(0, 0, 0, 0.2);
@@ -136,27 +136,27 @@ body {
   border-radius: 12px;
   outline: none;
   border: none;
-  background: #1d1b31;
+  background: #374151;
   padding-left: 50px;
   font-size: 18px;
-  color: #fff;
+  color: #f9fafb;
 }
 
 .sidebar ul li .bx-search {
   position: absolute;
   z-index: 99;
-  color: #fff;
+  color: #f9fafb;
   font-size: 22px;
   transition: all 0.5 ease;
 }
 
 .sidebar ul li .bx-search:hover {
-  background: #fff;
-  color: #1d1b31;
+  background: #f9fafb;
+  color: #374151;
 }
 
 .sidebar ul li a {
-  color: #fff;
+  color: #f9fafb;
   display: flex;
   align-items: center;
   text-decoration: none;
@@ -166,8 +166,8 @@ body {
 }
 
 .sidebar ul li a:hover {
-  color: #11101d;
-  background: #fff;
+  color: #111827;
+  background: #f9fafb;
 }
 
 .sidebar ul li i {
@@ -191,7 +191,7 @@ body {
 
 .sidebar .profile_content {
   position: absolute;
-  color: #fff;
+  color: #f9fafb;
   bottom: 0;
   left: 0;
   width: 100%;
@@ -206,7 +206,7 @@ body {
 }
 
 .sidebar.active .profile_content .profile {
-  background: #1d1b31;
+  background: #374151;
 }
 
 .profile_content .profile .profile_details {
@@ -253,7 +253,7 @@ body {
   border-radius: 12px;
   text-align: center;
   transition: all 0.5s ease;
-  background: #1d1b31;
+  background: #374151;
 }
 
 .sidebar.active .profile #log_out {
@@ -277,7 +277,7 @@ body {
 .home_content .text {
   font-size: 25px;
   font-weight: 500;
-  color: #1d1b31;
+  color: #374151;
   margin: 12px;
 }
 
@@ -351,10 +351,10 @@ body {
 
 .admin-loader-box {
   align-items: center;
-  background: #fff;
+  background: #f9fafb;
   border-radius: 8px;
   box-shadow: 0 18px 50px rgba(0, 0, 0, 0.25);
-  color: #11101d;
+  color: #111827;
   display: flex;
   font-weight: 600;
   gap: 12px;
@@ -364,8 +364,8 @@ body {
 
 .admin-spinner {
   animation: admin-spin 0.7s linear infinite;
-  border: 3px solid #d8d8e6;
-  border-top-color: #11101d;
+  border: 3px solid #d4af37;
+  border-top-color: #111827;
   border-radius: 50%;
   display: inline-block;
   flex: 0 0 24px;
