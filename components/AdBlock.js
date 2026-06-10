@@ -21,7 +21,7 @@ export default function AdBlock({ ad }) {
         </div>
       </section>
       <section className="a7-ads-container">
-        {["AJAY BHAI", "JASSI BHAI", name].map((title) => (
+        {[ name].map((title) => (
           <article className="a7-ad-card" key={title}>
             <p><strong>--सीधे सट्टा कंपनी का No 1 खाईवाल--</strong></p>
             <p><strong>♕♕ {title} KHAIWAL ♕♕</strong></p>

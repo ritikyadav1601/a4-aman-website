@@ -45,6 +45,23 @@ function isPending(value) {
   return String(value).toUpperCase() === "XX";
 }
 
+function timeToMinutes(time = "") {
+  const [hours, minutes] = String(time).split(":").map(Number);
+  if (Number.isNaN(hours) || Number.isNaN(minutes)) return 0;
+  return hours * 60 + minutes;
+}
+
+function currentIstMinutes(date = new Date()) {
+  const parts = new Intl.DateTimeFormat("en-US", {
+    timeZone: "Asia/Kolkata",
+    hour: "2-digit",
+    minute: "2-digit",
+    hourCycle: "h23"
+  }).formatToParts(date);
+  const map = Object.fromEntries(parts.map((part) => [part.type, part.value]));
+  return Number(map.hour) * 60 + Number(map.minute);
+}
+
 function resultScore(game) {
   return (isPending(game.first) ? 0 : 2) + (isPending(game.second) ? 0 : 1);
 }
@@ -55,6 +72,39 @@ function pickBestGame(candidates, displayName) {
     if (score) return score;
     return Number(normalizeGameName(b.name) === normalizeGameName(displayName)) - Number(normalizeGameName(a.name) === normalizeGameName(displayName));
   })[0];
+}
+
+function resultUpdatedTime(game) {
+  const date = game.secondUpdatedAt ? new Date(game.secondUpdatedAt) : null;
+  return date && !Number.isNaN(date.valueOf()) ? date.valueOf() : 0;
+}
+
+function getHeroGames(games) {
+  const now = currentIstMinutes();
+  const byTime = [...games].sort((a, b) => timeToMinutes(a.resultTime) - timeToMinutes(b.resultTime));
+  const upcoming = byTime.find((game) => timeToMinutes(game.resultTime) > now) || byTime[0];
+  const selected = upcoming ? [upcoming] : [];
+  const selectedIds = new Set(selected.map((game) => String(game._id)));
+  const updatedGames = games
+    .filter((game) => !selectedIds.has(String(game._id)) && !isPending(game.second))
+    .sort((a, b) => {
+      const updated = resultUpdatedTime(b) - resultUpdatedTime(a);
+      if (updated) return updated;
+      return featuredGameOrder(a.name) - featuredGameOrder(b.name);
+    });
+
+  for (const game of updatedGames) {
+    if (selected.length >= 3) break;
+    selected.push(game);
+    selectedIds.add(String(game._id));
+  }
+
+  for (const game of games) {
+    if (selected.length >= 3) break;
+    if (!selectedIds.has(String(game._id))) selected.push(game);
+  }
+
+  return selected;
 }
 
 function LiveResultSection({ games, showClock = false }) {
@@ -134,7 +184,7 @@ export default async function HomePage() {
   const year = new Date().getFullYear();
   const title = `Satta Result Chart ${monthName(today)} ${year}`;
   const featuredMarket = featuredGames.find((game) => normalizeGameName(game.name) === "desawer") || featuredGames[0];
-  const heroGames = featuredGames.slice(0, 5);
+  const heroGames = getHeroGames(featuredGames);
 
   return (
     <PublicLayout>
