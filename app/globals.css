@@ -846,8 +846,9 @@ select {
 }
 
 .a7-ads-container {
-  display: grid;
+  display: flex;
   gap: 5px;
+  justify-items: center;
   margin: 5px 0;
 }
 
@@ -857,8 +858,10 @@ select {
   border-radius: 20px;
   font-weight: 800;
   margin: 5px 0;
+  max-width: 720px;
   padding: 16px 8px;
   text-align: center;
+  width: 100%;
 }
 
 .a7-ad-card p {
@@ -1019,7 +1022,9 @@ select {
   }
 
   .a7-ads-container {
-    grid-template-columns: repeat(3, minmax(0, 1fr));
+    display: flex;
+    justify-content: center;
+    align-items: center;
   }
 }
 

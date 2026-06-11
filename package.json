@@ -7,7 +7,7 @@
     "build": "next build",
     "start": "next start",
     "lint": "next lint",
-    "import:sql": "node scripts/import-sql-to-mongo.js",
+    "migrate:legacy-results": "node scripts/migrate-legacy-results.js",
     "sync:a7": "node scripts/sync-a7-results.js",
     "sync:a7:smart": "node scripts/sync-a7-results.js --smart --window-minutes 120"
   },

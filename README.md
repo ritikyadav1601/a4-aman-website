@@ -26,10 +26,11 @@ cp .env.example .env
 
 3. Put your MongoDB connection string in `MONGODB_URI`.
 
-4. Import the old SQL data:
+4. If the MongoDB database still has data in the old `results` collection, migrate it into the current app collections:
 
 ```bash
-npm run import:sql -- /Users/ritikyadav/Downloads/sattakingfast.com_2026-05-12_09-33-40/murgan_kalkasatta.sql
+npm run migrate:legacy-results -- --dry-run
+npm run migrate:legacy-results
 ```
 
 5. Run locally:
