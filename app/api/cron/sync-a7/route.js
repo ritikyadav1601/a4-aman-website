@@ -21,8 +21,7 @@ export async function GET(request) {
   try {
     const report = await withTimeout(
       syncA7Results({
-        smart: true,
-        windowMinutes: 120,
+        smart: false,
         fetchTimeoutMs: 12000
       }),
       CRON_SYNC_TIMEOUT_MS

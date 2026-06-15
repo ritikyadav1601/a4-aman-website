@@ -30,8 +30,11 @@ export default function AdBlock({ ad }) {
             <p><strong>⏰ दिल्ली बाजार ---------- 2:50 pm</strong></p>
             <p><strong>⏰ दिल्ली मटका ---------- 3:20 pm</strong></p>
             <p><strong>⏰ श्री गणेश ------------- 4:20 pm</strong></p>
+            <p><strong>⏰ आगरा ----------------5:20 pm</strong></p>
             <p><strong>⏰ फरीदाबाद ------------ 5:50 pm</strong></p>
+            <p><strong>⏰ अलवर ----------------7:20 pm</strong></p>
             <p><strong>⏰ गाज़ियाबाद ----------- 8:50 pm</strong></p>
+            <p><strong>⏰ द्वारका -------------- 10:10 pm</strong></p>
             <p><strong>⏰ गली ----------------- 11:20 pm</strong></p>
             <p><strong>⏰ दिसावर -------------- 1:30 am</strong></p>
             <p><a href={`https://wa.me/+${whatsapp}`} target="_blank" rel="noopener noreferrer"><strong>Game play करने के लिये नीचे लिंक पर क्लिक करे</strong></a></p>
