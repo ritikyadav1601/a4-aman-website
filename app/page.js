@@ -5,7 +5,7 @@ import GameCards from "@/components/GameCards";
 import MonthlyChartTable from "@/components/MonthlyChartTable";
 import PublicLayout from "@/components/PublicLayout";
 import YearlyChartSeoContent from "@/components/YearlyChartSeoContent";
-import { getAds, getGamesWithTodayResults, getMonthlyRows, getTopGames } from "@/lib/data";
+import { getGamesWithTodayResults, getMonthlyRows, getTopGames } from "@/lib/data";
 import { formatTime, istDate, monthName, slugify } from "@/lib/utils";
 
 export const revalidate = 30;
@@ -93,23 +93,25 @@ function resultUpdatedTime(game) {
 function getHeroGames(games) {
   const now = currentIstMinutes();
   const byTime = [...games].sort((a, b) => timeToMinutes(a.resultTime) - timeToMinutes(b.resultTime));
+  
+  // Game 1: next upcoming (result time hasn't passed yet)
   const upcoming = byTime.find((game) => timeToMinutes(game.resultTime) > now) || byTime[0];
+  
   const selected = upcoming ? [upcoming] : [];
   const selectedIds = new Set(selected.map((game) => String(game._id)));
-  const updatedGames = games
-    .filter((game) => !selectedIds.has(String(game._id)) && !isPending(game.second))
-    .sort((a, b) => {
-      const updated = resultUpdatedTime(b) - resultUpdatedTime(a);
-      if (updated) return updated;
-      return featuredGameOrder(a.name) - featuredGameOrder(b.name);
-    });
 
-  for (const game of updatedGames) {
+  // Game 2 & 3: last 2 games with declared (non-pending) results, most recent first
+  const recentlyDeclared = [...games]
+    .filter((game) => !selectedIds.has(String(game._id)) && !isPending(game.second))
+    .sort((a, b) => resultUpdatedTime(b) - resultUpdatedTime(a));
+
+  for (const game of recentlyDeclared) {
     if (selected.length >= 3) break;
     selected.push(game);
     selectedIds.add(String(game._id));
   }
 
+  // fallback: fill with any remaining games
   for (const game of games) {
     if (selected.length >= 3) break;
     if (!selectedIds.has(String(game._id))) selected.push(game);
@@ -160,10 +162,7 @@ function yearlyChartOrder(name = "") {
 }
 
 export default async function HomePage() {
-  const [ads, games] = await Promise.all([
-    getAds(),
-    getGamesWithTodayResults()
-  ]);
+  const games = await getGamesWithTodayResults();
   const monthly = await getMonthlyRows({ untilToday: true, games });
   const gamesByName = games.reduce((map, game) => {
     const key = normalizeGameName(game.name);
@@ -201,7 +200,7 @@ export default async function HomePage() {
     <PublicLayout>
       <LiveResultSection games={heroGames.length ? heroGames : featuredTopGames} showClock />
       <FeaturedMarketStrip game={featuredMarket} />
-      <AdBlock ad={ads[0]} />
+      <AdBlock />
       <GameCards games={featuredGames} />
       <LiveResultSection games={remainingTopGames} />
       <GameCards games={remainingGames} />

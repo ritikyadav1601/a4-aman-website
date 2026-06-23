@@ -23,7 +23,11 @@ function GameRow({ game }) {
 }
 
 export default function GameCards({ games }) {
-  if (!games.length) {
+  const filtered = games.filter(
+    (game) => game.name?.toLowerCase() !== "desawer"
+  );
+
+  if (!filtered.length) {
     return <div className="empty-state p-4 text-center font-bold">No active games found. Import SQL data from admin database backup.</div>;
   }
 
@@ -38,7 +42,7 @@ export default function GameCards({ games }) {
           </tr>
         </thead>
         <tbody>
-          {games.map((game) => <GameRow key={game._id} game={game} />)}
+          {filtered.map((game) => <GameRow key={game._id} game={game} />)}
         </tbody>
       </table>
     </section>

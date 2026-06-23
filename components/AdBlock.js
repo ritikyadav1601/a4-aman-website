@@ -1,13 +1,16 @@
-export default function AdBlock({ ad }) {
-  const name = ad?.khaiwalName || "SATTA KING";
-  const whatsapp = ad?.whatsappNumber || "";
+import { siteConfig } from "@/lib/site-config";
+
+export default function AdBlock() {
+  const name = siteConfig.khaiwalName;
+  const whatsapp = siteConfig.whatsappNumber;
+  const telegram = siteConfig.telegramLink;
 
   return (
     <>
       <section className="a7-notifications">
         <div className="a7-notification">
           <p>"Now Telegram players can also join our Telegram channel to get results quickly and receive superfast results."</p>
-          <a href={`https://wa.me/+${whatsapp}`} target="_blank" rel="noopener noreferrer">JOIN TELEGRAM</a>
+          <a href={telegram} target="_blank" rel="noopener noreferrer">JOIN TELEGRAM</a>
         </div>
         <div className="a7-notification">
           <p>"Now WhatsApp players can also join our WhatsApp channel to get results quickly and receive superfast results."</p>
@@ -21,7 +24,7 @@ export default function AdBlock({ ad }) {
         </div>
       </section>
       <section className="a7-ads-container">
-        {[ name].map((title) => (
+        {[name].map((title) => (
           <article className="a7-ad-card" key={title}>
             <p><strong>--सीधे सट्टा कंपनी का No 1 खाईवाल--</strong></p>
             <p><strong>♕♕ {title} KHAIWAL ♕♕</strong></p>
@@ -33,7 +36,7 @@ export default function AdBlock({ ad }) {
             <p><strong>⏰ आगरा ----------------5:20 pm</strong></p>
             <p><strong>⏰ फरीदाबाद ------------ 5:50 pm</strong></p>
             <p><strong>⏰ अलवर ----------------7:20 pm</strong></p>
-            <p><strong>⏰ गाज़ियाबाद ----------- 8:50 pm</strong></p>
+            <p><strong>⏰ गाज़ियाबाद ----------- 8:50 pm</strong></p>
             <p><strong>⏰ द्वारका -------------- 10:10 pm</strong></p>
             <p><strong>⏰ गली ----------------- 11:20 pm</strong></p>
             <p><strong>⏰ दिसावर -------------- 1:30 am</strong></p>
