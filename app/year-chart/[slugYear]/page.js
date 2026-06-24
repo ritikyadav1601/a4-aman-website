@@ -3,10 +3,35 @@ import { getYearChartRows } from "@/lib/data";
 
 export const revalidate = 300;
 
+const siteUrl = process.env.NEXT_PUBLIC_SITE_URL || "https://sattakingfast.com";
+
 function ResultText({ value }) {
   const result = value || "-";
   const pending = String(result).toUpperCase() === "XX";
   return <span className={pending ? "result-pending" : undefined}>{result}</span>;
+}
+
+export async function generateMetadata({ params }) {
+  const resolvedParams = await params;
+  const slugYear = decodeURIComponent(resolvedParams.slugYear || "");
+  const match = slugYear.match(/^(.+)-result-chart-(\d{4})$/);
+  const slug = match?.[1] || "desawer";
+  const year = match?.[2] || new Date().getFullYear();
+  const gameName = slug.replace(/-/g, " ").replace(/\b\w/g, (c) => c.toUpperCase());
+
+  return {
+    title: `${gameName} Result Chart ${year} | Yearly Satta King Records`,
+    description: `Complete ${gameName} Yearly Result Chart ${year}. View month-wise daily results for all 12 months. Old chart records, jodi history and full year data for ${gameName} Satta King.`,
+    alternates: {
+      canonical: `${siteUrl}/year-chart/${resolvedParams.slugYear}`
+    },
+    openGraph: {
+      title: `${gameName} Result Chart ${year} | Yearly Satta King Records`,
+      description: `${gameName} yearly result chart for ${year} with complete month-by-month daily records.`,
+      url: `${siteUrl}/year-chart/${resolvedParams.slugYear}`,
+      type: "website"
+    }
+  };
 }
 
 export default async function YearChartPage({ params }) {

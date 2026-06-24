@@ -4,11 +4,23 @@ import Clock from "@/components/Clock";
 import GameCards from "@/components/GameCards";
 import MonthlyChartTable from "@/components/MonthlyChartTable";
 import PublicLayout from "@/components/PublicLayout";
-import YearlyChartSeoContent from "@/components/YearlyChartSeoContent";
+import { WebsiteJsonLd } from "@/components/JsonLd";
 import { getGamesWithTodayResults, getMonthlyRows, getTopGames } from "@/lib/data";
 import { formatTime, istDate, monthName, slugify } from "@/lib/utils";
+import SeoContent from "@/components/SeoContent";
 
 export const revalidate = 30;
+
+const siteUrl = process.env.NEXT_PUBLIC_SITE_URL || "https://sattakingfast.com";
+
+export const metadata = {
+  title: "Satta King Result Today | Gali, Desawar, Ghaziabad & Faridabad Chart Records",
+  description:
+    "Check daily Satta King Result updates, Gali Satta Result, Desawar Chart, Ghaziabad Result and Faridabad Records. Explore complete old chart history from 2015 to 2025 with updated archives and historical data.",
+  alternates: {
+    canonical: siteUrl
+  }
+};
 
 function resultClass(value) {
   return String(value).toUpperCase() === "XX" ? " result-pending" : "";
@@ -93,10 +105,10 @@ function resultUpdatedTime(game) {
 function getHeroGames(games) {
   const now = currentIstMinutes();
   const byTime = [...games].sort((a, b) => timeToMinutes(a.resultTime) - timeToMinutes(b.resultTime));
-  
+
   // Game 1: next upcoming (result time hasn't passed yet)
   const upcoming = byTime.find((game) => timeToMinutes(game.resultTime) > now) || byTime[0];
-  
+
   const selected = upcoming ? [upcoming] : [];
   const selectedIds = new Set(selected.map((game) => String(game._id)));
 
@@ -198,6 +210,7 @@ export default async function HomePage() {
 
   return (
     <PublicLayout>
+      <WebsiteJsonLd />
       <LiveResultSection games={heroGames.length ? heroGames : featuredTopGames} showClock />
       <FeaturedMarketStrip game={featuredMarket} />
       <AdBlock />
@@ -215,7 +228,7 @@ export default async function HomePage() {
           ))}
         </div>
       </section>
-      <YearlyChartSeoContent />
+      <SeoContent />
     </PublicLayout>
   );
 }
