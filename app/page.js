@@ -204,7 +204,7 @@ export default async function HomePage() {
   });
   const today = istDate();
   const year = new Date().getFullYear();
-  const title = `Satta Result Chart ${monthName(today)} ${year}`;
+  const title = `Satta Result Chart ${monthName(today)}`;
   const featuredMarket = featuredGames.find((game) => normalizeGameName(game.name) === "desawer") || featuredGames[0];
   const heroGames = getHeroGames(featuredGames);
 

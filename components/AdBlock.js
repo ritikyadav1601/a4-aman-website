@@ -10,18 +10,13 @@ export default function AdBlock() {
       <section className="a7-notifications">
         <div className="a7-notification">
           <p>"Now Telegram players can also join our Telegram channel to get results quickly and receive superfast results."</p>
-          <a href={telegram} target="_blank" rel="noopener noreferrer">JOIN TELEGRAM</a>
+          <a href={`https://t.me/superfastresultupdate`} target="_blank" rel="noopener noreferrer">JOIN TELEGRAM</a>
         </div>
         <div className="a7-notification">
           <p>"Now WhatsApp players can also join our WhatsApp channel to get results quickly and receive superfast results."</p>
           <a href={`https://wa.me/+${whatsapp}`} target="_blank" rel="noopener noreferrer">JOIN WHATSAPP</a>
         </div>
-        <div className="a7-notification">
-          <h2>Shri Ganesh Satta King result is updated everyday at 4:40 PM.</h2>
-        </div>
-        <div className="a7-notification">
-          <h2>Sadar Bazar Satta King 2026 Chart is available on A7Satta.com</h2>
-        </div>
+       
       </section>
       <section className="a7-ads-container">
         {[name].map((title) => (

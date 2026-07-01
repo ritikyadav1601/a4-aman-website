@@ -33,8 +33,8 @@ function ResultText({ value }) {
 function ChartTables({ rows, chunks }) {
   return chunks.map((group, groupIndex) => (
     <table key={groupIndex} className="satta-results-table chart-table w-full border mb-5">
-      <thead>
-        <tr className="chart-header-row text-sm md:text-base">
+      <thead className="text-black">
+        <tr className="chart-header-row text-sm md:text-base ">
           <th className="chart-cell chart-date-cell whitespace-nowrap px-3 py-2 border">Date</th>
           {group.map((game) => (
             <th key={game} className="chart-cell text-center px-3 py-2 border">

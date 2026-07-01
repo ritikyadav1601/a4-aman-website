@@ -48,7 +48,7 @@ export default async function MonthChartPage({ params }) {
 
   return (
     <PublicLayout>
-      <MonthlyChartTable title={`Satta Result Chart ${monthName(dateKey)} ${year}`} rows={monthly.rows} columns={monthly.gameColumns} dateKey={dateKey} />
+      <MonthlyChartTable title={`Satta Result Chart ${monthName(dateKey)}`} rows={monthly.rows} columns={monthly.gameColumns} dateKey={dateKey} />
     </PublicLayout>
   );
 }

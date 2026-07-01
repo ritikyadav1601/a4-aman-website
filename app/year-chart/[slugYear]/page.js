@@ -59,8 +59,8 @@ export default async function YearChartPage({ params }) {
           {slug.toUpperCase()} YEARLY CHART {year}
         </h2>
         <div className="overflow-x-auto mt-6">
-          <table className="chart-table w-full border">
-            <thead>
+          <table className="chart-table w-full border ">
+            <thead >
               <tr className="chart-header-row text-sm md:text-base">
                 <th className="chart-cell px-3 py-2 border">DATE</th>
                 {months.map((month) => <th className="chart-cell px-3 py-2 border whitespace-nowrap" key={month}>{month}</th>)}

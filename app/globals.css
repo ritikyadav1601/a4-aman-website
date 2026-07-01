@@ -557,6 +557,11 @@ select {
   color: var(--chart-header-text);
 }
 
+.chart-header-row .chart-cell,
+.satta-results-table .chart-header-row th {
+  color: #ffffff;
+}
+
 .chart-date-cell {
   background: var(--chart-date-bg);
   color: var(--chart-heading-text);
@@ -1078,3 +1083,10 @@ select {
     max-width: calc(100% - 40px);
   }
 }
+
+.chart-header-row {
+  background: var(--chart-header-bg); /* now #000000 */
+  color: var(--chart-header-text);    /* still #ffffff, stays white */
+}
+
+
