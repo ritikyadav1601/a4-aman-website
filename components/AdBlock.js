@@ -1,4 +1,5 @@
 import { siteConfig } from "@/lib/site-config";
+import { FaWhatsapp, FaTelegramPlane } from "react-icons/fa";
 
 export default function AdBlock() {
   const whatsapp = siteConfig.whatsappNumber;
@@ -7,14 +8,52 @@ export default function AdBlock() {
   return (
     <>
       <section className="a7-notifications">
-        <div className="a7-notification">
-          <p>"Now Telegram players can also join our Telegram channel to get results quickly and receive superfast results."</p>
-          <a href={`https://t.me/superfastresultupdate`} target="_blank" rel="noopener noreferrer">JOIN TELEGRAM</a>
-        </div>
-        <div className="a7-notification">
-          <p>"Now WhatsApp players can also join our WhatsApp channel to get results quickly and receive superfast results."</p>
-          <a href={`https://wa.me/+${whatsapp}`} target="_blank" rel="noopener noreferrer">JOIN WHATSAPP</a>
-        </div>
+        
+      <div className="a7-notification">
+  <p>
+    "Now WhatsApp players can also join our WhatsApp channel to get results
+    quickly and receive superfast results."
+  </p>
+
+  <a
+    href={`https://whatsapp.com/channel/0029Vb7N6II8fewx7GpwN01p`}
+    target="_blank"
+    rel="noopener noreferrer"
+    className="a7-social-btn whatsapp"
+  >
+    <span className="icon-circle">
+      <FaWhatsapp />
+    </span>
+
+    <span className="text">
+      <strong>WhatsApp</strong>
+      <small>Click to chat</small>
+    </span>
+  </a>
+</div>
+
+<div className="a7-notification">
+  <p>
+    "Now Telegram players can also join our Telegram channel to get results
+    quickly and receive superfast results."
+  </p>
+
+  <a
+    href="https://t.me/faridabadsattafastresult"
+    target="_blank"
+    rel="noopener noreferrer"
+    className="a7-social-btn telegram"
+  >
+    <span className="icon-circle">
+      <FaTelegramPlane />
+    </span>
+
+    <span className="text">
+      <strong>Telegram</strong>
+      <small>Click to connect</small>
+    </span>
+  </a>
+</div>
       </section>
       <section className="a7-ads-container">
         <KhaiwalCard khaiwal={khaiwal} />

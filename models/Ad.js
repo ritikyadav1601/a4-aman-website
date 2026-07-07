@@ -8,7 +8,7 @@ const AdSchema = new mongoose.Schema(
     khaiwalName: { type: String, default: "" },
     website: { type: String, default: "" }
   },
-  { timestamps: true }
+  { timestamps: true, collection: "advertisements" }
 );
 
 export default mongoose.models.Ad || mongoose.model("Ad", AdSchema);

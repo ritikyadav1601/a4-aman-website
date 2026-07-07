@@ -10,6 +10,28 @@ import Contact from "@/models/Contact";
 import Game from "@/models/Game";
 import GameResult from "@/models/GameResult";
 import User from "@/models/User";
+import mongoose from "mongoose";
+
+function mongoId(value) {
+  const id = String(value || "");
+  return mongoose.Types.ObjectId.isValid(id) ? new mongoose.Types.ObjectId(id) : value;
+}
+
+function resultDateRange(dateKey) {
+  const start = new Date(`${dateKey}T00:00:00.000Z`);
+  const end = new Date(start);
+  end.setUTCDate(end.getUTCDate() + 1);
+  return { start, end };
+}
+
+function resultTimeToCityTime(resultTime = "") {
+  const [hours = "00", minutes = "00"] = String(resultTime || "").split(":");
+  return `${String(hours).padStart(2, "0")}:${String(minutes).padStart(2, "0")}`;
+}
+
+async function hasCityGames() {
+  return (await Game.db.collection("cities").countDocuments({}, { limit: 1 })) > 0;
+}
 
 export async function saveContact(formData) {
   await requireAdmin();
@@ -44,16 +66,46 @@ export async function saveGame(formData) {
   await requireAdmin();
   await connectDB();
   const id = formData.get("id");
+  const resultTime = formData.get("resultTime") || "00:00:00";
+  const showIndex = Number(formData.get("showIndex") || 0);
   const data = {
     name: formData.get("name") || "",
     code: formData.get("code") || "",
-    resultTime: formData.get("resultTime") || "00:00:00",
-    showIndex: Number(formData.get("showIndex") || 0),
+    resultTime,
+    showIndex,
     isActive: true
   };
-  if (id) await Game.findByIdAndUpdate(id, data);
-  else await Game.create(data);
+
+  const cityId = id ? mongoId(id) : null;
+  const existingCity = id
+    ? await Game.db.collection("cities").findOne({ _id: cityId }, { projection: { _id: 1 } })
+    : null;
+
+  if (existingCity || (!id && (await hasCityGames()))) {
+    const cityData = {
+      name: data.name,
+      code: data.code,
+      revelationTime: resultTimeToCityTime(resultTime),
+      revelationOrder: showIndex,
+      isActive: true,
+      updatedAt: new Date()
+    };
+
+    if (existingCity) {
+      await Game.db.collection("cities").updateOne({ _id: cityId }, { $set: cityData });
+    } else {
+      await Game.db.collection("cities").insertOne({ ...cityData, createdAt: new Date() });
+    }
+  } else if (id) {
+    await Game.findByIdAndUpdate(id, data);
+  } else {
+    await Game.create(data);
+  }
+
   revalidatePath("/");
+  revalidatePath("/charts");
+  revalidatePath("/chart/[slug]", "page");
+  revalidatePath("/year-chart/[slugYear]", "page");
   redirect("/admin/games?saved=1");
 }
 
@@ -61,8 +113,18 @@ export async function deleteGame(formData) {
   await requireAdmin();
   await connectDB();
   const id = formData.get("id");
-  if (id) await Game.findByIdAndUpdate(id, { isActive: false });
+  if (id) {
+    const cityId = mongoId(id);
+    const cityUpdate = await Game.db.collection("cities").updateOne(
+      { _id: cityId },
+      { $set: { isActive: false, updatedAt: new Date() } }
+    );
+    if (!cityUpdate.matchedCount) await Game.findByIdAndUpdate(id, { isActive: false });
+  }
   revalidatePath("/");
+  revalidatePath("/charts");
+  revalidatePath("/chart/[slug]", "page");
+  revalidatePath("/year-chart/[slugYear]", "page");
   redirect("/admin/games?deleted=1");
 }
 
@@ -73,14 +135,38 @@ export async function saveGameResult(formData) {
   const resultDate = formData.get("resultDate");
   const result = formData.get("result") || "";
   if (game && resultDate) {
-    const gameDoc = await Game.findById(game).lean();
-    await GameResult.findOneAndUpdate(
-      { game, resultDate },
-      { game, gameSqlId: gameDoc?.sqlId, resultDate, result },
-      { upsert: true, new: true, setDefaultsOnInsert: true }
-    );
+    const gameId = mongoId(game);
+    const city = await Game.db.collection("cities").findOne({ _id: gameId }, { projection: { sqlId: 1 } });
+
+    if (city) {
+      const { start, end } = resultDateRange(resultDate);
+      await Game.db.collection("dailynumbers").findOneAndUpdate(
+        { city: gameId, date: { $gte: start, $lt: end } },
+        {
+          $set: {
+            city: gameId,
+            date: start,
+            number: result,
+            revealedAt: new Date(),
+            updatedAt: new Date()
+          },
+          $setOnInsert: { createdAt: new Date() }
+        },
+        { upsert: true, returnDocument: "after" }
+      );
+    } else {
+      const gameDoc = await Game.findById(game).lean();
+      await GameResult.findOneAndUpdate(
+        { game, resultDate },
+        { game, gameSqlId: gameDoc?.sqlId, resultDate, result },
+        { upsert: true, new: true, setDefaultsOnInsert: true }
+      );
+    }
   }
   revalidatePath("/");
+  revalidatePath("/charts");
+  revalidatePath("/chart/[slug]", "page");
+  revalidatePath("/year-chart/[slugYear]", "page");
   redirect(`/admin/game/result?date=${resultDate || ""}&saved=1`);
 }
 
@@ -89,8 +175,15 @@ export async function deleteGameResult(formData) {
   await connectDB();
   const id = formData.get("id");
   const date = formData.get("date");
-  if (id) await GameResult.findByIdAndDelete(id);
+  if (id) {
+    const dailyNumberId = mongoId(id);
+    const dailyDelete = await Game.db.collection("dailynumbers").deleteOne({ _id: dailyNumberId });
+    if (!dailyDelete.deletedCount) await GameResult.findByIdAndDelete(id);
+  }
   revalidatePath("/");
+  revalidatePath("/charts");
+  revalidatePath("/chart/[slug]", "page");
+  revalidatePath("/year-chart/[slugYear]", "page");
   redirect(`/admin/game/result?date=${date || ""}&deleted=1`);
 }
 

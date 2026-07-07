@@ -1090,3 +1090,85 @@ select {
 }
 
 
+
+
+
+
+.a7-notification {
+  text-align: center;
+  padding: 18px;
+  background: linear-gradient(#ffd400, #fff6bf);
+  border: 3px dashed red;
+  border-radius: 18px;
+  margin-bottom: 14px;
+}
+
+.a7-notification p {
+  font-weight: 600;
+  margin-bottom: 18px;
+  color: #333;
+}
+
+.a7-social-btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 14px;
+  padding: 8px 24px 8px 8px;
+  border-radius: 999px;
+  color: white;
+  text-decoration: none;
+  font-family: sans-serif;
+  transition: 0.2s;
+}
+
+.a7-social-btn:hover {
+  transform: scale(1.03);
+}
+
+.a7-social-btn.whatsapp {
+  background: #22c55e;
+}
+
+.a7-social-btn.telegram {
+  background: #1d9bf0;
+}
+
+.icon-circle {
+  width: 64px;
+  height: 64px;
+  border-radius: 50%;
+  background: white;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.icon-circle svg {
+  font-size: 38px;
+}
+
+.whatsapp .icon-circle svg {
+  color: #22c55e;
+}
+
+.telegram .icon-circle svg {
+  color: #1d9bf0;
+}
+
+.a7-social-btn .text {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  line-height: 1.1;
+}
+
+.a7-social-btn .text strong {
+  font-size: 32px;
+  color: #111;
+}
+
+.a7-social-btn .text small {
+  color: #fff;
+  font-size: 18px;
+  font-weight: 600;
+}
