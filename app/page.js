@@ -9,6 +9,9 @@ import { getGamesWithTodayResults, getMonthlyRows, getTopGames } from "@/lib/dat
 import { formatTime, istDate, monthName, slugify } from "@/lib/utils";
 import SeoContent from "@/components/SeoContent";
 
+import { KhaiwalCard } from "@/components/AdBlock";
+import { siteConfig } from "@/lib/site-config";
+
 export const revalidate = 30;
 
 const siteUrl = process.env.NEXT_PUBLIC_SITE_URL || "https://sattakingfast.com";
@@ -134,7 +137,6 @@ function getHeroGames(games) {
 
 function LiveResultSection({ games, showClock = false }) {
   if (!games.length) return null;
-
   return (
     <section className={showClock ? "a7-hero-results" : "a7-compact-results"}>
       {showClock ? <Clock /> : null}
@@ -191,8 +193,9 @@ export default async function HomePage() {
     })
     .filter(Boolean)
     .filter((game, index, list) => list.findIndex((item) => normalizeGameName(item.name) === normalizeGameName(game.name)) === index);
-  const featuredTopGames = await getTopGames(featuredGames);
-  const remainingGames = games.filter((game) => !featuredGameKeys.has(normalizeGameName(game.name)));
+  const primaryGames = featuredGames.length ? featuredGames : games;
+  const featuredTopGames = await getTopGames(primaryGames);
+  const remainingGames = featuredGames.length ? games.filter((game) => !featuredGameKeys.has(normalizeGameName(game.name))) : [];
   const remainingTopGames = await getTopGames(remainingGames);
   const yearlyGames = [...games].sort((a, b) => {
     const aOrder = yearlyChartOrder(a.name);
@@ -205,8 +208,8 @@ export default async function HomePage() {
   const today = istDate();
   const year = new Date().getFullYear();
   const title = `Satta Result Chart ${monthName(today)}`;
-  const featuredMarket = featuredGames.find((game) => normalizeGameName(game.name) === "desawer") || featuredGames[0];
-  const heroGames = getHeroGames(featuredGames);
+  const featuredMarket = primaryGames.find((game) => normalizeGameName(game.name) === "desawer") || primaryGames[0];
+  const heroGames = getHeroGames(games);
 
   return (
     <PublicLayout>
@@ -214,9 +217,10 @@ export default async function HomePage() {
       <LiveResultSection games={heroGames.length ? heroGames : featuredTopGames} showClock />
       <FeaturedMarketStrip game={featuredMarket} />
       <AdBlock />
-      <GameCards games={featuredGames} />
-      <LiveResultSection games={remainingTopGames} />
-      <GameCards games={remainingGames} />
+      <GameCards games={[...games].sort((a, b) => timeToMinutes(a.resultTime) - timeToMinutes(b.resultTime))} />
+<section className="a7-ads-container">
+  <KhaiwalCard khaiwal={siteConfig.khaiwals[1]} />
+</section>
       <MonthlyChartTable title={title} rows={monthly.rows} columns={monthly.gameColumns} dateKey={today} />
       <section className="a7-year-links">
         <h2>SATTA RECORD CHART {year}</h2>

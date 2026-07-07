@@ -26,14 +26,16 @@ cp .env.example .env
 
 3. Put your MongoDB connection string in `MONGODB_URI`.
 
-4. If the MongoDB database still has data in the old `results` collection, migrate it into the current app collections:
+4. Optional: set `RESULT_SOURCE_MONGODB_URI` to read public game results from a separate MongoDB database. The app only reads from this source and only displays results for games that exist on this website.
+
+5. If the MongoDB database still has data in the old `results` collection, migrate it into the current app collections:
 
 ```bash
 npm run migrate:legacy-results -- --dry-run
 npm run migrate:legacy-results
 ```
 
-5. Run locally:
+6. Run locally:
 
 ```bash
 npm run dev
@@ -95,5 +97,6 @@ npm run sync:a7 -- --smart --window-minutes 10
 Deploy the folder to Vercel and set:
 
 - `MONGODB_URI`
+- `RESULT_SOURCE_MONGODB_URI`
 - `SESSION_SECRET`
 - `NEXT_PUBLIC_SITE_URL`

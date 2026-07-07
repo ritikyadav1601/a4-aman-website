@@ -1,45 +1,45 @@
 :root {
   --site-bg: #ffffff;
   --site-surface: #ffffff;
-  --site-surface-soft: #f9fafb;
-  --site-surface-alt: #f3f4f6;
-  --site-text: #111827;
-  --site-muted: #4b5563;
-  --site-border: #d4af37;
+  --site-surface-soft: #fff8bf;
+  --site-surface-alt: #fff1a3;
+  --site-text: #000000;
+  --site-muted: #34323f;
+  --site-border: #000000;
   --on-dark: #ffffff;
 
-  --brand-primary: #111827;
-  --brand-primary-dark: #0b1220;
-  --brand-primary-soft: #374151;
-  --brand-secondary: #d4af37;
-  --brand-secondary-dark: #a7831f;
-  --brand-accent: #f9fafb;
-  --brand-accent-soft: #f3f4f6;
-  --brand-info: #111827;
-  --brand-success: #15803d;
+  --brand-primary: #000000;
+  --brand-primary-dark: #080714;
+  --brand-primary-soft: #34323f;
+  --brand-secondary: #ffd800;
+  --brand-secondary-dark: #e2bd00;
+  --brand-accent: #ffffff;
+  --brand-accent-soft: #fff8bf;
+  --brand-info: #000000;
+  --brand-success: #008232;
 
-  --nav-bg: #111827;
-  --nav-pill-bg: #d4af37;
+  --nav-bg: #000000;
+  --nav-pill-bg: #ffd800;
   --nav-pill-active-bg: #f9fafb;
-  --nav-text: #111827;
-  --nav-border: #d4af37;
+  --nav-text: #000000;
+  --nav-border: #000000;
 
   --live-title: #ffffff;
   --live-game: #ffffff;
-  --live-number: #d4af37;
-  --live-card-bg: #111827;
-  --live-card-border: #d4af37;
+  --live-number: #ffd800;
+  --live-card-bg: #000000;
+  --live-card-border: #ffd800;
 
   --chart-heading-bg: var(--brand-secondary);
-  --chart-heading-text: #111827;
-  --chart-header-bg: #111827;
+  --chart-heading-text: #000000;
+  --chart-header-bg: #000000;
   --chart-header-text: #ffffff;
-  --chart-date-bg: #f9fafb;
-  --chart-row-alt: #f9fafb;
+  --chart-date-bg: #ffd800;
+  --chart-row-alt: #fff8bf;
 
-  --footer-bg: #111827;
+  --footer-bg: #000000;
   --footer-text: #ffffff;
   --whatsapp-bg: #25d366;
-  --ad-bg: #f9fafb;
-  --ad-border: #d4af37;
+  --ad-bg: #ffd800;
+  --ad-border: #000000;
 }

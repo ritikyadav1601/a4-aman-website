@@ -19,7 +19,7 @@ export default function PublicLayout({ children }) {
         </div>
       </header>
       <section className="a7-logo-band">
-        <Link className="a7-logo blink" href="/">Satta king Gali desawer</Link>
+        <Link className="a7-logo blink" href="/">A4SATTA OFFICIAL</Link>
       </section>
       {children}
       <a href={`https://wa.me/+${whatsapp}`} className="floating" target="_blank" rel="noreferrer" aria-label="WhatsApp">
