@@ -4,15 +4,9 @@ import { makeSession, sessionCookieName, verifyPassword } from "@/lib/auth";
 import User from "@/models/User";
 
 function redirectUrl(path, request) {
-  const configuredUrl = process.env.NEXT_PUBLIC_SITE_URL || "";
   const requestUrl = new URL(request.url);
-  const baseUrl =
-    configuredUrl ||
-    (requestUrl.hostname === "localhost" || requestUrl.hostname === "127.0.0.1"
-      ? "https://www.a4satta.com"
-      : requestUrl.origin);
 
-  return new URL(path, baseUrl);
+  return new URL(path, requestUrl.origin);
 }
 
 export async function POST(request) {
